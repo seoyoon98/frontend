@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHouse } from "@fortawesome/free-solid-svg-icons";
 
-const Header = ({ isLoginOpen, onLoginClick, isMyPageOpen, onMyPageClick }) => {
-  const [login, setLogin] = useState(true);
+const Header = ({
+  login,
+  onLogout,
+  isLoginOpen,
+  onLoginClick,
+  isMyPageOpen,
+  onMyPageClick,
+}) => {
+  const onLogoutClick = () => {
+    onLogout(false);
+    onMyPageClick(false);
+  };
 
   const onClickLoginBtnClick = () => {
     onLoginClick(!isLoginOpen);
@@ -14,13 +24,21 @@ const Header = ({ isLoginOpen, onLoginClick, isMyPageOpen, onMyPageClick }) => {
   };
 
   const upperButton = login ? (
-    <button
-      className="text-lg bg-white rounded-[16px] p-3 text-center hover:bg-[#e1e1e1] duration-150"
-      onClick={onMyPageBtnClick}
-    >
-      <FontAwesomeIcon icon={faUser} className="mr-2" />
-      <span>My Page</span>
-    </button>
+    <div className="flex">
+      <button
+        className="text-lg bg-white rounded-[16px] p-3 text-center hover:bg-[#e1e1e1] duration-150 mr-6"
+        onClick={onMyPageBtnClick}
+      >
+        <FontAwesomeIcon icon={faUser} className="mr-2" />
+        <span>My Page</span>
+      </button>
+      <button
+        onClick={onLogoutClick}
+        className="text-xl hover:text-[#111111]/[0.5] duration-100"
+      >
+        Logout
+      </button>
+    </div>
   ) : (
     <div className="flex">
       <button
