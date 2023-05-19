@@ -2,21 +2,25 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHouse } from "@fortawesome/free-solid-svg-icons";
 
-const Header = ({ isLoginOpen, onLoginClick }) => {
-  const [login, setLogin] = useState(false);
+const Header = ({ isLoginOpen, onLoginClick, isMyPageOpen, onMyPageClick }) => {
+  const [login, setLogin] = useState(true);
 
   const onClickLoginBtnClick = () => {
     onLoginClick(!isLoginOpen);
   };
 
+  const onMyPageBtnClick = () => {
+    onMyPageClick(!isMyPageOpen);
+  };
+
   const upperButton = login ? (
-    <a
-      href="/"
+    <button
       className="text-lg bg-white rounded-[16px] p-3 text-center hover:bg-[#e1e1e1] duration-150"
+      onClick={onMyPageBtnClick}
     >
       <FontAwesomeIcon icon={faUser} className="mr-2" />
       <span>My Page</span>
-    </a>
+    </button>
   ) : (
     <div className="flex">
       <button
@@ -32,7 +36,7 @@ const Header = ({ isLoginOpen, onLoginClick }) => {
   );
 
   return (
-    <div className="z-3 w-full text-3xl flex justify-between items-center px-8 h-20 bg-orange-300/[0.75] text-black">
+    <div className="fixed top-0 z-3 w-full text-3xl flex justify-between items-center px-8 h-20 bg-orange-300/[0.75] text-black">
       <a href="/" className="hover:text-slate-600/[0.8] duration-200">
         <FontAwesomeIcon icon={faHouse} />
       </a>
