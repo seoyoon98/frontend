@@ -4,13 +4,13 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 
 import Input from "./Input";
 
-const Login = ({ isLoginOpen, onXClick, setLogin }) => {
+const Login = ({ isSignUpOpen, setSignUpModalOpen, setLogin }) => {
   const [ID, setID] = useState("");
   const [PW, setPW] = useState("");
   const [PWC, setPWC] = useState("");
 
   const onXBtnClick = () => {
-    onXClick(!isLoginOpen);
+    setSignUpModalOpen(!isSignUpOpen);
   };
 
   const onSignUpCompleteBtnClick = () => {
@@ -22,6 +22,7 @@ const Login = ({ isLoginOpen, onXClick, setLogin }) => {
       return;
     }
     setLogin(true);
+    setSignUpModalOpen(false);
   };
 
   return (

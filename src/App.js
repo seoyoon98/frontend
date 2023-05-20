@@ -31,7 +31,7 @@ function App() {
       {signUpModalOpen ? (
         <Signup
           isSignUpOpen={signUpModalOpen}
-          onXClick={setSignUpModalOpen}
+          setSignUpModalOpen={setSignUpModalOpen}
           setLogin={setLogin}
         />
       ) : null}
