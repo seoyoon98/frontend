@@ -20,7 +20,6 @@ function App() {
         isMyPageOpen={myPageOpen}
         onMyPageClick={setMyPageOpen}
       />
-      <StartPage />
       {loginModalOpen ? (
         <Login isLoginOpen={loginModalOpen} onXClick={setLoginModalOpen} />
       ) : null}
