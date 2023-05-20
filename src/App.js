@@ -5,12 +5,14 @@ import Login from "./components/Login";
 import Signup from "./components/Signup.jsx";
 import MyPage from "./components/MyPage";
 import StartPage from "./components/StartPage";
+import MainPage from './components/MainPage';
 
 function App() {
   const [login, setLogin] = useState(true);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const [myPageOpen, setMyPageOpen] = useState(false);
+  const [mainPageOpen, setMainPageOpen] = useState(false);
 
   return (
     <div className="w-screen relative">
@@ -36,6 +38,7 @@ function App() {
         />
       ) : null}
       {myPageOpen ? <MyPage /> : null}
+      {mainPageOpen ? <MainPage /> : null}
     </div>
   );
 }
