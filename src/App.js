@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import MyPage from "./components/MyPage";
+import StartPage from "./components/StartPage";
 
 function App() {
   const [login, setLogin] = useState(true);
@@ -19,6 +20,7 @@ function App() {
         isMyPageOpen={myPageOpen}
         onMyPageClick={setMyPageOpen}
       />
+      <StartPage />
       {loginModalOpen ? (
         <Login isLoginOpen={loginModalOpen} onXClick={setLoginModalOpen} />
       ) : null}
