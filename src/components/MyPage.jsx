@@ -4,7 +4,7 @@ import userProfile from "../assets/user.png";
 
 const MyPage = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-full pt-20 h-screen bg-[#e1e1e1]/[0.3] p-8">
+    <div className="flex flex-col justify-center items-center w-full mt-24 pt-20 h-screen bg-[#e1e1e1]/[0.3] p-8">
       <div className="flex justify-center items-center mb-20 bg-lime-500/[0.7] p-8 pr-12 rounded-xl">
         <img
           className="w-[120px] h-[120px] mr-12 rounded-full"
