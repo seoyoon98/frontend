@@ -7,6 +7,8 @@ const Header = ({
   onLogout,
   isLoginOpen,
   onLoginClick,
+  isSignUpOpen,
+  onSignUpClick,
   isMyPageOpen,
   onMyPageClick,
 }) => {
@@ -15,8 +17,14 @@ const Header = ({
     onMyPageClick(false);
   };
 
-  const onClickLoginBtnClick = () => {
+  const onLoginBtnClick = () => {
     onLoginClick(!isLoginOpen);
+    onSignUpClick(false);
+  };
+
+  const onSignUpBtnClick = () => {
+    onSignUpClick(!isSignUpOpen);
+    onLoginClick(false);
   };
 
   const onMyPageBtnClick = () => {
@@ -42,12 +50,15 @@ const Header = ({
   ) : (
     <div className="flex">
       <button
-        onClick={onClickLoginBtnClick}
+        onClick={onLoginBtnClick}
         className="text-xl mr-6 hover:text-[#111111]/[0.5] duration-100"
       >
         Login
       </button>
-      <button className="text-xl hover:text-[#111111]/[0.5] duration-100">
+      <button
+        onClick={onSignUpBtnClick}
+        className="text-xl hover:text-[#111111]/[0.5] duration-100"
+      >
         Sign up
       </button>
     </div>

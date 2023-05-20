@@ -2,12 +2,14 @@ import React, { useState } from "react";
 
 import Header from "./components/Header";
 import Login from "./components/Login";
+import Signup from "./components/Signup.jsx";
 import MyPage from "./components/MyPage";
 import StartPage from "./components/StartPage";
 
 function App() {
   const [login, setLogin] = useState(true);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const [myPageOpen, setMyPageOpen] = useState(false);
 
   return (
@@ -17,12 +19,21 @@ function App() {
         onLogout={setLogin}
         isLoginOpen={loginModalOpen}
         onLoginClick={setLoginModalOpen}
+        isSignUpOpen={signUpModalOpen}
+        onSignUpClick={setSignUpModalOpen}
         isMyPageOpen={myPageOpen}
         onMyPageClick={setMyPageOpen}
       />
       {/* <StartPage /> */}
       {loginModalOpen ? (
         <Login isLoginOpen={loginModalOpen} onXClick={setLoginModalOpen} />
+      ) : null}
+      {signUpModalOpen ? (
+        <Signup
+          isSignUpOpen={signUpModalOpen}
+          onXClick={setSignUpModalOpen}
+          setLogin={setLogin}
+        />
       ) : null}
       {myPageOpen ? <MyPage /> : null}
     </div>
