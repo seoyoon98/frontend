@@ -1046,6 +1046,10 @@ video {
   background-color: rgb(132 204 22 / 0.7);
 }
 
+.bg-lime-500\/\[0\.5\] {
+  background-color: rgb(132 204 22 / 0.5);
+}
+
 .p-3 {
   padding: 0.75rem;
 }
