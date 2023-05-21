@@ -21,7 +21,7 @@ const RestaurantData = ({setRListOpen, setRDataOpen, name, nums, score}) => {
                 <MenuData/>
                 <ReviewData/>
             </div>
-        </div>            
+        </div>
     );
 };
 
