@@ -1,6 +1,10 @@
 /* global kakao */
 import React, { useEffect, useState } from "react";
 import { starting_point } from '../App.js';
+import Category from "./Category.js";
+import RestaurantList from "./RestaurantList.js";
+import RestaurantData from "./RestaurantData.js";
+import MainPage from "./MainPage.js";
 
 function getDistance(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
@@ -34,11 +38,18 @@ function getDistance(lat1, lon1, lat2, lon2) {
   
     return closestLocation ? closestLocation.name : "No locations available";
   }
-  
 
 const { kakao } = window;
 
 const Map = ({ locations }) => {
+  const [CategoryOpen, setCategoryOpen] = useState(true);
+  const [RListOpen, setRListOpen] = useState(false);
+  const [RDataOpen, setRDataOpen] = useState(false);
+  const [Menu, setMenu] = useState('');
+  const [RName, setRName] = useState('');
+  const [RNums, setRNums] = useState('');
+  const [RScore, setRScore] = useState('');
+
   const [map, setMap] = useState(null);
   const [currentPosition, setCurrentPosition] = useState(null);
   const [currentPositionMarker, setCurrentPositionMarker] = useState(null);
@@ -55,7 +66,7 @@ const Map = ({ locations }) => {
 
     let options = {
       center: new window.kakao.maps.LatLng(35.85133, 127.734086),
-      level: 2,
+      level: 4,
     };
 
     let newMap = new window.kakao.maps.Map(container, options);
@@ -268,92 +279,28 @@ const Map = ({ locations }) => {
       window.fastfoodMarkers.push(marker);
     });
   };
-
+     
   return (
-    <div>
-        <button
-            onClick={handleschoolFoodButton}
-            style={{
-                position: 'fixed',
-                top: '15%',
-                left: '10%',
-                transform: 'translate(-50%, -50%)',
-            }}
-        >
-        School Food
-        </button>
-
-        <button
-            onClick={handlewFoodButton}
-            style={{
-                position: 'fixed',
-                top: '25%',
-                left: '10%',
-                transform: 'translate(-50%, -50%)',
-            }}
-        >
-        Western Food
-        </button>
-
-        <button
-            onClick={handlecFoodButton}
-            style={{
-                position: 'fixed',
-                top: '35%',
-                left: '10%',
-                transform: 'translate(-50%, -50%)',
-            }}
-        >
-        Chinese Food
-        </button>
-
-        <button
-            onClick={handleKFoodButton}
-            style={{
-                position: 'fixed',
-                top: '45%',
-                left: '10%',
-                transform: 'translate(-50%, -50%)',
-            }}
-        >
-        Korean Food
-        </button>
-
-        <button
-            onClick={handlefastFoodButton}
-            style={{
-                position: 'fixed',
-                top: '55%',
-                left: '10%',
-                transform: 'translate(-50%, -50%)',
-            }}
-        >
-        Fast Food
-        </button>
-
-        <button
-            onClick={handleJFoodButton}
-            style={{
-                position: 'fixed',
-                top: '65%',
-                left: '10%',
-                transform: 'translate(-50%, -50%)',
-            }}
-        >
-        Japanese Food
-        </button>
-
-        <div
+    <div style={{display: "flex", flexDirection: "row"}}>
+      <div>
+        {CategoryOpen && <Category setCategoryOpen={setCategoryOpen} setRListOpen={setRListOpen} setMenu={setMenu}/>}
+        {RListOpen && <RestaurantList setCategoryOpen={setCategoryOpen} setRListOpen={setRListOpen} setRDataOpen={setRDataOpen} menu={Menu} setMenu={setMenu} setName={setRName} setNums={setRNums} setScore={setRScore}/>}
+        {RDataOpen && <RestaurantData setRListOpen={setRListOpen} setRDataOpen={setRDataOpen} name={RName} nums={RNums} score={RScore}/>}
+        {/* Add the map related HTML elements here */}
+      </div>
+      
+      <div
             id="map"
             style={{
-                width: "85%",
-                height: "1000px",
-                transform: "translate(25%, 8%)",
+                width: "1800px",
+                height: "800px",
+                transform: "translate(4%, 10%)",
             }}
             className="relative z-0"
         />
     </div>
-  );
+);
+
 };
 
 export default Map;

@@ -3,7 +3,6 @@ import RestaurantList from "./RestaurantList";
 import RestaurantData from "./RestaurantData";
 import {useState} from "react";
 
-
 const MainPage = () => {
 
   const [CategoryOpen, setCategoryOpen] = useState(true);

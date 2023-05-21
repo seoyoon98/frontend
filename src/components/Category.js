@@ -11,8 +11,11 @@ const Category = ({setCategoryOpen, setRListOpen, setMenu}) => {
 	return (
 		<div style={{
             border: '1px solid green',
-            width: '15%',
-            padding: '10px'
+            width: '80%',
+            padding: '10px',
+			marginTop: '80px',
+			marginLeft: '0px',
+			marginRight: '0px',
         	}}>
                
         	<h4>메뉴를 선택하세요</h4>
@@ -31,7 +34,7 @@ const Category = ({setCategoryOpen, setRListOpen, setMenu}) => {
 const CategoryElement = ({gotid, imgsrc, choose}) => {
 
 	return(
-		<div id={gotid} onClick={()=>choose(gotid)} className="category" style={{border: '1px solid green', padding: "10px", display: 'flex'}}>
+		<div id={gotid} onClick={()=>choose(gotid)} className="category" style={{border: '1px solid green', padding: "10px", display: 'flex', marginRight: '0px',}}>
 			<img width='120px' height='80px' src={imgsrc}/>
 			<p style={{textAlign: 'center'}}>{gotid}</p>
 		</div>

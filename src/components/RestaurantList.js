@@ -18,7 +18,7 @@ const RestaurantList = ({setCategoryOpen, setRListOpen, setRDataOpen, menu, setM
     }
     
     return(
-        <div style={{border: '1px solid green', padding: '10px', width: "15%"}}>
+        <div style={{border: '1px solid green', padding: '10px', width: "150%", marginTop: '80px'}}>
             <h5>menu</h5>
             <h5>{menu}</h5>
             <button onClick={onBackClick}>Back</button>
@@ -42,7 +42,7 @@ const RestaurantList = ({setCategoryOpen, setRListOpen, setRDataOpen, menu, setM
 
 const RestaurantElement = ({name, dist, choose})=> {
     return(
-        <div onClick={()=>choose(name, '11', '4.2')} style={{border: '1px solid green'}}>
+        <div onClick={()=>choose(name, '11', '4.2')} style={{border: '1px solid green', marginRight: '0px',}}>
             <p>{name}</p>
             <p>{dist}</p>
         </div>

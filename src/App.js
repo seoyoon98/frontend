@@ -6,7 +6,7 @@ import Signup from "./components/Signup.jsx";
 import MyPage from "./components/MyPage";
 import StartPage from "./components/StartPage";
 import MainPage from './components/MainPage';
-import Kakao from "./components/Kakao";
+import Map from "./components/Kakao";
 
 function App() {
   const [login, setLogin] = useState(true);
@@ -40,8 +40,7 @@ function App() {
         isMyPageOpen={myPageOpen}
         onMyPageClick={setMyPageOpen}
       />
-      <Kakao locations={locations} />
-      {login ? <MainPage /> : <StartPage />}
+      {login ? <Map locations={locations} /> : <StartPage />}
       {/* <StartPage /> */}
       {loginModalOpen ? (
         <Login isLoginOpen={loginModalOpen} onXClick={setLoginModalOpen} />
