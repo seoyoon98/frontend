@@ -42,6 +42,7 @@ function App() {
       />
       <Kakao locations={locations} />
       {login ? <MainPage /> : <StartPage />}
+      {/* <StartPage /> */}
       {loginModalOpen ? (
         <Login isLoginOpen={loginModalOpen} onXClick={setLoginModalOpen} />
       ) : null}
