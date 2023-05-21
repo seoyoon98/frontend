@@ -805,6 +805,10 @@ video {
   width: 100%;
 }
 
+.w-half {
+  width: 50%;
+}
+
 .w-\[700px\] {
   width: 700px;
 }
@@ -1165,6 +1169,11 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.startPage-image {
+  height: 150px;
+  width: 150px;
 }
 
 .duration-100 {
