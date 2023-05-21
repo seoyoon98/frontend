@@ -26,7 +26,7 @@ function App() {
         isMyPageOpen={myPageOpen}
         onMyPageClick={setMyPageOpen}
       />
-      {/* <StartPage /> */}
+      {login ? <MainPage /> : <StartPage />}
       {loginModalOpen ? (
         <Login isLoginOpen={loginModalOpen} onXClick={setLoginModalOpen} />
       ) : null}
