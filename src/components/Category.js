@@ -1,6 +1,7 @@
 import React from "react";
+import Map from "./Kakao";
 
-const Category = ({setCategoryOpen, setRListOpen, setMenu}) => {
+const Category = ({setCategoryOpen, setRListOpen, setMenu, handleKFoodButton, handleJFoodButton, handlefastFoodButton, handleschoolFoodButton, handlewFoodButton, handlecFoodButton}) => {
 
 	function onCategoryChoose(menu) {
 		setCategoryOpen(false);
@@ -20,12 +21,30 @@ const Category = ({setCategoryOpen, setRListOpen, setMenu}) => {
                
         	<h4>메뉴를 선택하세요</h4>
                 
-            <CategoryElement gotid='한식' imgsrc='img\한식.jpg' choose={onCategoryChoose}/>
-            <CategoryElement gotid='양식' imgsrc='img\양식.jpg' choose={onCategoryChoose}/>
-            <CategoryElement gotid='일식' imgsrc='img\일식.jpg' choose={onCategoryChoose}/>
-            <CategoryElement gotid='중식' imgsrc='img\중식.jpg' choose={onCategoryChoose}/>
-            <CategoryElement gotid='분식' imgsrc='img\분식.png' choose={onCategoryChoose}/>
-            <CategoryElement gotid='패스트푸드' imgsrc='img\패스트푸드.jpg' choose={onCategoryChoose}/>
+            <CategoryElement gotid='한식' imgsrc='img\한식.jpg' choose={gotid => {
+          if (gotid === "한식") handleKFoodButton();
+          onCategoryChoose(gotid);
+        }}/>
+            <CategoryElement gotid='양식' imgsrc='img\양식.jpg' choose={gotid => {
+          if (gotid === "양식") handlewFoodButton();
+          onCategoryChoose(gotid);
+        }}/>
+            <CategoryElement gotid='일식' imgsrc='img\일식.jpg' choose={gotid => {
+          if (gotid === "일식") handleJFoodButton();
+          onCategoryChoose(gotid);
+        }}/>
+            <CategoryElement gotid='중식' imgsrc='img\중식.jpg' choose={gotid => {
+          if (gotid === "중식") handlecFoodButton();
+          onCategoryChoose(gotid);
+        }}/>
+            <CategoryElement gotid='분식' imgsrc='img\분식.png' choose={gotid => {
+          if (gotid === "분식") handleschoolFoodButton();
+          onCategoryChoose(gotid);
+        }}/>
+            <CategoryElement gotid='패스트푸드' imgsrc='img\패스트푸드.jpg' choose={gotid => {
+          if (gotid === "패스트푸드") handlefastFoodButton();
+          onCategoryChoose(gotid);
+        }}/>
             </div>
 	);
 

@@ -58,9 +58,9 @@ const Map = ({ locations }) => {
   window.kfoodMarkers = window.kfoodMarkers || [];
   window.fastfoodMarkers = window.fastfoodMarkers || [];
   window.jfoodMarkers = window.jfoodMarkers || [];
-  window.wfoodMarkers = window.jfoodMarkers || [];
-  window.cfoodMarkers = window.jfoodMarkers || [];
-  window.schoolfoodMarkers = window.jfoodMarkers || [];
+  window.wfoodMarkers = window.wfoodMarkers || [];
+  window.cfoodMarkers = window.cfoodMarkers || [];
+  window.schoolfoodMarkers = window.schoolfoodMarkers || [];
 
   useEffect(() => {
     let container = document.getElementById("map");
@@ -112,10 +112,11 @@ const Map = ({ locations }) => {
 
     // Clear old fastfood markers
     window.fastfoodMarkers.forEach(marker => marker.setMap(null));
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
     window.cfoodMarkers.forEach(marker => marker.setMap(null));
     window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
     window.wfoodMarkers.forEach(marker => marker.setMap(null));
+    window.kfoodMarkers.forEach(marker => marker.setMap(null));
+    window.jfoodMarkers.forEach(marker => marker.setMap(null));
 
     window.kfoodMarkers = [];
     locations.filter(location => location.category === "kfood").forEach(location => {
@@ -146,6 +147,7 @@ const Map = ({ locations }) => {
     window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
     window.wfoodMarkers.forEach(marker => marker.setMap(null));
     window.kfoodMarkers.forEach(marker => marker.setMap(null));
+    window.jfoodMarkers.forEach(marker => marker.setMap(null));
 
     window.jfoodMarkers = [];
     locations.filter(location => location.category === "jfood").forEach(location => {
@@ -163,6 +165,26 @@ const Map = ({ locations }) => {
       });
 
       marker.setMap(map);
+
+    //   var iwContent = `
+    //   <div style="padding:5px; height:80px">
+    //     ${location.name}
+    //     <br>
+    //     <a href="https://map.kakao.com/link/map/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">큰지도보기</a>
+    //     <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a>
+    //   </div>
+    // `,
+    //     iwPosition = new kakao.maps.LatLng(location.latitude, location.longitude); //인포윈도우 표시 위치입니다
+
+    //   // 인포윈도우를 생성합니다
+    //   var infowindow = new kakao.maps.InfoWindow({
+    //     position: iwPosition,
+    //     content: iwContent
+    //   });
+
+    //   // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+    //   infowindow.open(map, marker);
+
       window.jfoodMarkers.push(marker);
     });
   };
@@ -170,12 +192,13 @@ const Map = ({ locations }) => {
   const handlefastFoodButton = () => {
     if (!map || !currentPosition) return;
 
-    // Clear old kfood markers
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
+    // Clear old fastfood markers
+    window.fastfoodMarkers.forEach(marker => marker.setMap(null));
     window.cfoodMarkers.forEach(marker => marker.setMap(null));
     window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
     window.wfoodMarkers.forEach(marker => marker.setMap(null));
     window.kfoodMarkers.forEach(marker => marker.setMap(null));
+    window.jfoodMarkers.forEach(marker => marker.setMap(null));
 
     window.fastfoodMarkers = [];
     locations.filter(location => location.category === "fastfood").forEach(location => {
@@ -200,12 +223,13 @@ const Map = ({ locations }) => {
   const handleschoolFoodButton = () => {
     if (!map || !currentPosition) return;
 
-    // Clear old kfood markers
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
-    window.cfoodMarkers.forEach(marker => marker.setMap(null));
+    // Clear old fastfood markers
     window.fastfoodMarkers.forEach(marker => marker.setMap(null));
+    window.cfoodMarkers.forEach(marker => marker.setMap(null));
+    window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
     window.wfoodMarkers.forEach(marker => marker.setMap(null));
     window.kfoodMarkers.forEach(marker => marker.setMap(null));
+    window.jfoodMarkers.forEach(marker => marker.setMap(null));
 
     window.schoolfoodMarkers = [];
     locations.filter(location => location.category === "schoolfood").forEach(location => {
@@ -220,11 +244,10 @@ const Map = ({ locations }) => {
 
       kakao.maps.event.addListener(marker, 'click', function () {
         window.open("https://map.kakao.com/link/to/" + location.name + ',' + location.latitude + ',' + location.longitude);
-        // window.open(`https://map.kakao.com/?map_type=TYPE_MAP&target=walk&rt=%2C%2C495190%2C1053160&rt1=${nearestLocationName}&rt2=${location.name}&rtIds=%2C&rtTypes=%2C`, '_blank');
       });
 
       marker.setMap(map);
-      window.fastfoodMarkers.push(marker);
+      window.schoolfoodMarkers.push(marker);
     });
   };
 
@@ -232,11 +255,12 @@ const Map = ({ locations }) => {
     if (!map || !currentPosition) return;
 
     // Clear old kfood markers
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
-    window.cfoodMarkers.forEach(marker => marker.setMap(null));
     window.fastfoodMarkers.forEach(marker => marker.setMap(null));
+    window.cfoodMarkers.forEach(marker => marker.setMap(null));
     window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
+    window.wfoodMarkers.forEach(marker => marker.setMap(null));
     window.kfoodMarkers.forEach(marker => marker.setMap(null));
+    window.jfoodMarkers.forEach(marker => marker.setMap(null));
 
     window.wfoodMarkers = [];
     locations.filter(location => location.category === "wfood").forEach(location => {
@@ -254,7 +278,8 @@ const Map = ({ locations }) => {
       });
 
       marker.setMap(map);
-      window.fastfoodMarkers.push(marker);
+
+      window.wfoodMarkers.push(marker);
     });
   };
 
@@ -262,11 +287,12 @@ const Map = ({ locations }) => {
     if (!map || !currentPosition) return;
 
     // Clear old kfood markers
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
-    window.wfoodMarkers.forEach(marker => marker.setMap(null));
     window.fastfoodMarkers.forEach(marker => marker.setMap(null));
+    window.cfoodMarkers.forEach(marker => marker.setMap(null));
     window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
+    window.wfoodMarkers.forEach(marker => marker.setMap(null));
     window.kfoodMarkers.forEach(marker => marker.setMap(null));
+    window.jfoodMarkers.forEach(marker => marker.setMap(null));
 
     window.cfoodMarkers = [];
     locations.filter(location => location.category === "cfood").forEach(location => {
@@ -284,105 +310,36 @@ const Map = ({ locations }) => {
       });
 
       marker.setMap(map);
-      window.fastfoodMarkers.push(marker);
+
+      window.cfoodMarkers.push(marker);
     });
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <div>
-        {CategoryOpen && <Category setCategoryOpen={setCategoryOpen} setRListOpen={setRListOpen} setMenu={setMenu} />}
+        {CategoryOpen && <Category setCategoryOpen={setCategoryOpen} setRListOpen={setRListOpen} setMenu={setMenu} handleKFoodButton={handleKFoodButton} handleJFoodButton={handleJFoodButton} handleschoolFoodButton={handleschoolFoodButton} handlewFoodButton={handlewFoodButton} handlecFoodButton={handlecFoodButton} handlefastFoodButton={handlefastFoodButton} />}
         {RListOpen && <RestaurantList setCategoryOpen={setCategoryOpen} setRListOpen={setRListOpen} setRDataOpen={setRDataOpen} menu={Menu} setMenu={setMenu} setName={setRName} setNums={setRNums} setScore={setRScore} />}
         {RDataOpen && <RestaurantData setRListOpen={setRListOpen} setRDataOpen={setRDataOpen} name={RName} nums={RNums} score={RScore} />}
         {/* Add the map related HTML elements here */}
       </div>
 
-      <div>
+      <div style ={{textAlign: "center",}}>
         <div
           style={{
             position: 'fixed',
-            top: '71.5%',
-            left: '10%',
+            top: '80%',
+            left: '6%',
             transform: 'translate(-50%, -50%)',
             color: 'black',
-            backgroundColor: 'white'
+            backgroundColor: '#00FA9A',
+            padding: "10px",
+            borderRadius: "10px",
+            textAlign: "center"
           }}
         >
-          Nearest location:<br></br>{nearestLocationName}
+          Nearest location<br></br>{nearestLocationName}
         </div>
-
-        <button
-          onClick={handleschoolFoodButton}
-          style={{
-            position: 'fixed',
-            top: '77%',
-            left: '10%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          School Food
-        </button>
-
-        <button
-          onClick={handlewFoodButton}
-          style={{
-            position: 'fixed',
-            top: '80%',
-            left: '10%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          Western Food
-        </button>
-
-        <button
-          onClick={handlecFoodButton}
-          style={{
-            position: 'fixed',
-            top: '83%',
-            left: '10%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          Chinese Food
-        </button>
-
-        <button
-          onClick={handleKFoodButton}
-          style={{
-            position: 'fixed',
-            top: '86%',
-            left: '10%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          Korean Food
-        </button>
-
-        <button
-          onClick={handlefastFoodButton}
-          style={{
-            position: 'fixed',
-            top: '89%',
-            left: '10%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          Fast Food
-        </button>
-
-        <button
-          onClick={handleJFoodButton}
-          style={{
-            position: 'fixed',
-            top: '92%',
-            left: '10%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          Japanese Food
-        </button>
-
       </div>
 
       <div
@@ -390,7 +347,7 @@ const Map = ({ locations }) => {
         style={{
           width: "1800px",
           height: "800px",
-          transform: "translate(4%, 10%)",
+          transform: "translate(7%, 10%)",
         }}
         className="relative z-0"
       />
