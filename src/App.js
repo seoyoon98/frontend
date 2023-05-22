@@ -26,7 +26,7 @@ function App() {
     { category: "wfood", name: "롤링파스타 수원성균관대점", latitude: 37.2982, longitude: 126.9689, score: 1, },
     { category: "cfood", name: "정원", latitude: 37.2985, longitude: 126.9693, score: 1, },
     { category: "wfood", name: "정성식탁", latitude: 37.2987, longitude: 126.9728, score: 1, },
-    { category: "여기서부터 수정", name: "본찌돈까스 성대점", latitude: 37.2987, longitude: 126.9728, score: 1, },
+    { category: "jfood", name: "본찌돈까스 성대점", latitude: 37.2987, longitude: 126.9728, score: 1, },
     { category: "wfood", name: "일미", latitude: 37.2987, longitude: 126.9728, score: 1, },
 
   ];

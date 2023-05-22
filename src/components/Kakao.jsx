@@ -6,6 +6,7 @@ import RestaurantList from "./RestaurantList.js";
 import RestaurantData from "./RestaurantData.js";
 import MainPage from "./MainPage.js";
 
+// 두 좌표 간의 거리를 Haversine 공식을 사용하여 계산하는 함수
 function getDistance(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2 - lat1);
@@ -20,10 +21,12 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return d;
 }
 
+// 각도를 라디안으로 변환하는 함수
 function deg2rad(deg) {
   return deg * (Math.PI / 180)
 }
 
+// 가장 가까운 위치를 찾는 함수. 미리 정해놓은 학교 및 학교 주변에 왕래가 많은 곳 중에 현위치와 가장 곳을 보여줌
 function findNearestLocation(currentLat, currentLng, locations) {
   let closestLocation = null;
   let closestDistance = Infinity;
@@ -111,12 +114,14 @@ const Map = ({ locations }) => {
     if (!map || !currentPosition) return;
 
     // Clear old fastfood markers
-    window.fastfoodMarkers.forEach(marker => marker.setMap(null));
-    window.cfoodMarkers.forEach(marker => marker.setMap(null));
-    window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
-    window.wfoodMarkers.forEach(marker => marker.setMap(null));
-    window.kfoodMarkers.forEach(marker => marker.setMap(null));
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
+    // Clear old markers and infowindows
+    window.fastfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.cfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.schoolfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.wfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.kfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.jfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+
 
     window.kfoodMarkers = [];
     locations.filter(location => location.category === "kfood").forEach(location => {
@@ -134,20 +139,41 @@ const Map = ({ locations }) => {
       });
 
       marker.setMap(map);
-      window.kfoodMarkers.push(marker);
+
+      var iwContent = `
+      <div style="padding:5px; height:80px">
+        ${location.name}
+        <br>
+        <p style="color:blue" target="_blank">점수</a>
+        <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a>
+      </div>
+    `,
+        iwPosition = new kakao.maps.LatLng(location.latitude, location.longitude); //인포윈도우 표시 위치입니다
+
+      // 인포윈도우를 생성
+      var infowindow = new kakao.maps.InfoWindow({
+        position: iwPosition,
+        content: iwContent
+      });
+
+      // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+      infowindow.open(map, marker);
+
+      window.kfoodMarkers.push({ marker: marker, infowindow: infowindow });
     });
   };
 
   const handleJFoodButton = () => {
     if (!map || !currentPosition) return;
 
-    // Clear old fastfood markers
-    window.fastfoodMarkers.forEach(marker => marker.setMap(null));
-    window.cfoodMarkers.forEach(marker => marker.setMap(null));
-    window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
-    window.wfoodMarkers.forEach(marker => marker.setMap(null));
-    window.kfoodMarkers.forEach(marker => marker.setMap(null));
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
+    // Clear old markers and infowindows
+    window.fastfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.cfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.schoolfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.wfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.kfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.jfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+
 
     window.jfoodMarkers = [];
     locations.filter(location => location.category === "jfood").forEach(location => {
@@ -166,26 +192,26 @@ const Map = ({ locations }) => {
 
       marker.setMap(map);
 
-    //   var iwContent = `
-    //   <div style="padding:5px; height:80px">
-    //     ${location.name}
-    //     <br>
-    //     <a href="https://map.kakao.com/link/map/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">큰지도보기</a>
-    //     <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a>
-    //   </div>
-    // `,
-    //     iwPosition = new kakao.maps.LatLng(location.latitude, location.longitude); //인포윈도우 표시 위치입니다
+      var iwContent = `
+      <div style="padding:5px; height:80px">
+        ${location.name}
+        <br>
+        <p style="color:blue" target="_blank">점수</a>
+        <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a>
+      </div>
+    `,
+        iwPosition = new kakao.maps.LatLng(location.latitude, location.longitude); //인포윈도우 표시 위치입니다
 
-    //   // 인포윈도우를 생성합니다
-    //   var infowindow = new kakao.maps.InfoWindow({
-    //     position: iwPosition,
-    //     content: iwContent
-    //   });
+      // 인포윈도우를 생성합니다
+      var infowindow = new kakao.maps.InfoWindow({
+        position: iwPosition,
+        content: iwContent
+      });
 
-    //   // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-    //   infowindow.open(map, marker);
+      // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+      infowindow.open(map, marker);
 
-      window.jfoodMarkers.push(marker);
+      window.jfoodMarkers.push({ marker: marker, infowindow: infowindow });
     });
   };
 
@@ -193,12 +219,14 @@ const Map = ({ locations }) => {
     if (!map || !currentPosition) return;
 
     // Clear old fastfood markers
-    window.fastfoodMarkers.forEach(marker => marker.setMap(null));
-    window.cfoodMarkers.forEach(marker => marker.setMap(null));
-    window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
-    window.wfoodMarkers.forEach(marker => marker.setMap(null));
-    window.kfoodMarkers.forEach(marker => marker.setMap(null));
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
+    // Clear old markers and infowindows
+    window.fastfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.cfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.schoolfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.wfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.kfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.jfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+
 
     window.fastfoodMarkers = [];
     locations.filter(location => location.category === "fastfood").forEach(location => {
@@ -216,7 +244,27 @@ const Map = ({ locations }) => {
       });
 
       marker.setMap(map);
-      window.fastfoodMarkers.push(marker);
+
+      var iwContent = `
+      <div style="padding:5px; height:80px">
+        ${location.name}
+        <br>
+        <p style="color:blue" target="_blank">점수</a>
+        <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a>
+      </div>
+    `,
+        iwPosition = new kakao.maps.LatLng(location.latitude, location.longitude); //인포윈도우 표시 위치입니다
+
+      // 인포윈도우를 생성합니다
+      var infowindow = new kakao.maps.InfoWindow({
+        position: iwPosition,
+        content: iwContent
+      });
+
+      // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+      infowindow.open(map, marker);
+
+      window.fastfoodMarkers.push({ marker: marker, infowindow: infowindow });
     });
   };
 
@@ -224,12 +272,14 @@ const Map = ({ locations }) => {
     if (!map || !currentPosition) return;
 
     // Clear old fastfood markers
-    window.fastfoodMarkers.forEach(marker => marker.setMap(null));
-    window.cfoodMarkers.forEach(marker => marker.setMap(null));
-    window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
-    window.wfoodMarkers.forEach(marker => marker.setMap(null));
-    window.kfoodMarkers.forEach(marker => marker.setMap(null));
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
+    // Clear old markers and infowindows
+    window.fastfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.cfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.schoolfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.wfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.kfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.jfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+
 
     window.schoolfoodMarkers = [];
     locations.filter(location => location.category === "schoolfood").forEach(location => {
@@ -247,20 +297,42 @@ const Map = ({ locations }) => {
       });
 
       marker.setMap(map);
-      window.schoolfoodMarkers.push(marker);
+
+      var iwContent = `
+      <div style="padding:5px; height:80px">
+        ${location.name}
+        <br>
+        <p style="color:blue" target="_blank">점수</a>
+        <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a>
+      </div>
+    `,
+        iwPosition = new kakao.maps.LatLng(location.latitude, location.longitude); //인포윈도우 표시 위치입니다
+
+      // 인포윈도우를 생성합니다
+      var infowindow = new kakao.maps.InfoWindow({
+        position: iwPosition,
+        content: iwContent
+      });
+
+      // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+      infowindow.open(map, marker);
+
+      window.schoolfoodMarkers.push({ marker: marker, infowindow: infowindow });
     });
   };
 
   const handlewFoodButton = () => {
     if (!map || !currentPosition) return;
 
-    // Clear old kfood markers
-    window.fastfoodMarkers.forEach(marker => marker.setMap(null));
-    window.cfoodMarkers.forEach(marker => marker.setMap(null));
-    window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
-    window.wfoodMarkers.forEach(marker => marker.setMap(null));
-    window.kfoodMarkers.forEach(marker => marker.setMap(null));
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
+    // Clear old fastfood markers
+    // Clear old markers and infowindows
+    window.fastfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.cfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.schoolfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.wfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.kfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.jfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+
 
     window.wfoodMarkers = [];
     locations.filter(location => location.category === "wfood").forEach(location => {
@@ -279,20 +351,41 @@ const Map = ({ locations }) => {
 
       marker.setMap(map);
 
-      window.wfoodMarkers.push(marker);
+      var iwContent = `
+      <div style="padding:5px; height:80px">
+      ${location.name}
+      <br>
+      <p style="color:blue" target="_blank">점수</a>
+      <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a>
+    </div>
+    `,
+        iwPosition = new kakao.maps.LatLng(location.latitude, location.longitude); //인포윈도우 표시 위치입니다
+
+      // 인포윈도우를 생성합니다
+      var infowindow = new kakao.maps.InfoWindow({
+        position: iwPosition,
+        content: iwContent
+      });
+
+      // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+      infowindow.open(map, marker);
+
+      window.wfoodMarkers.push({ marker: marker, infowindow: infowindow });
     });
   };
 
   const handlecFoodButton = () => {
     if (!map || !currentPosition) return;
 
-    // Clear old kfood markers
-    window.fastfoodMarkers.forEach(marker => marker.setMap(null));
-    window.cfoodMarkers.forEach(marker => marker.setMap(null));
-    window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
-    window.wfoodMarkers.forEach(marker => marker.setMap(null));
-    window.kfoodMarkers.forEach(marker => marker.setMap(null));
-    window.jfoodMarkers.forEach(marker => marker.setMap(null));
+    // Clear old fastfood markers
+    // Clear old markers and infowindows
+    window.fastfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.cfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.schoolfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.wfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.kfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+    window.jfoodMarkers.forEach(item => { item.marker.setMap(null); item.infowindow.close(); });
+
 
     window.cfoodMarkers = [];
     locations.filter(location => location.category === "cfood").forEach(location => {
@@ -311,7 +404,26 @@ const Map = ({ locations }) => {
 
       marker.setMap(map);
 
-      window.cfoodMarkers.push(marker);
+      var iwContent = `
+      <div style="padding:5px; height:80px">
+        ${location.name}
+        <br>
+        <p style="color:blue" target="_blank">점수</a>
+        <a href="https://map.kakao.com/link/to/${location.name},${location.latitude},${location.longitude}" style="color:blue" target="_blank">길찾기</a>
+      </div>
+    `,
+        iwPosition = new kakao.maps.LatLng(location.latitude, location.longitude); //인포윈도우 표시 위치입니다
+
+      // 인포윈도우를 생성합니다
+      var infowindow = new kakao.maps.InfoWindow({
+        position: iwPosition,
+        content: iwContent
+      });
+
+      // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+      infowindow.open(map, marker);
+
+      window.cfoodMarkers.push({ marker: marker, infowindow: infowindow });
     });
   };
 
@@ -324,15 +436,15 @@ const Map = ({ locations }) => {
         {/* Add the map related HTML elements here */}
       </div>
 
-      <div style ={{textAlign: "center",}}>
+      <div style={{ textAlign: "center", }}>
         <div
           style={{
             position: 'fixed',
-            top: '80%',
-            left: '6%',
+            top: '4.5%',
+            left: '75%',
             transform: 'translate(-50%, -50%)',
             color: 'black',
-            backgroundColor: '#00FA9A',
+            backgroundColor: '#FFDEAD',
             padding: "10px",
             borderRadius: "10px",
             textAlign: "center"

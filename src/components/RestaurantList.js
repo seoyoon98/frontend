@@ -24,12 +24,30 @@ const RestaurantList = ({ setCategoryOpen, setRListOpen, setRDataOpen, menu, set
     });
 
     function onBackClick() {
-        window.fastfoodMarkers.forEach(marker => marker.setMap(null));
-        window.cfoodMarkers.forEach(marker => marker.setMap(null));
-        window.schoolfoodMarkers.forEach(marker => marker.setMap(null));
-        window.wfoodMarkers.forEach(marker => marker.setMap(null));
-        window.kfoodMarkers.forEach(marker => marker.setMap(null));
-        window.jfoodMarkers.forEach(marker => marker.setMap(null));
+        window.jfoodMarkers.forEach(item => {
+            item.marker.setMap(null);   // Set marker map to null
+            item.infowindow.close();    // Close infowindow
+        });
+        window.fastfoodMarkers.forEach(item => {
+            item.marker.setMap(null);   // Set marker map to null
+            item.infowindow.close();    // Close infowindow
+        });
+        window.cfoodMarkers.forEach(item => {
+            item.marker.setMap(null);   // Set marker map to null
+            item.infowindow.close();    // Close infowindow
+        });
+        window.wfoodMarkers.forEach(item => {
+            item.marker.setMap(null);   // Set marker map to null
+            item.infowindow.close();    // Close infowindow
+        });
+        window.kfoodMarkers.forEach(item => {
+            item.marker.setMap(null);   // Set marker map to null
+            item.infowindow.close();    // Close infowindow
+        });
+        window.schoolfoodMarkers.forEach(item => {
+            item.marker.setMap(null);   // Set marker map to null
+            item.infowindow.close();    // Close infowindow
+        });
         setCategoryOpen(true);
         setRListOpen(false);
         setMenu('');
